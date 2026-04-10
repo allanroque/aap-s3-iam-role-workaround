@@ -20,7 +20,7 @@ fatal: [automationhub]: FAILED! => {
 }
 ```
 
-Este comportamento é documentado pela Red Hat no artigo [Hub S3 Storage on AAP 2.5 requires hub_s3_access_key](https://access.redhat.com/solutions/7123456) e permanece presente na versão 2.6.
+Este comportamento é documentado pela Red Hat no artigo [Hub S3 Storage on AAP 2.5 requires hub_s3_access_key](https://access.redhat.com/solutions/7124885) e permanece presente na versão 2.5 e 2.6.
 
 Existe um problema decorrente desta limitação no contexto **operacional**: clientes que seguem boas práticas de segurança AWS utilizam IAM Role/Instance Profile e não possuem credenciais estáticas para informar ao installer.
 
@@ -580,12 +580,3 @@ Enquanto a implementação nativa não está disponível, recomenda-se:
 - [AWS EC2 — IMDS Hop Limit](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/configuring-IMDS-existing-instances.html)
 - [django-storages — Amazon S3 Backend](https://django-storages.readthedocs.io/en/latest/backends/amazon-S3.html)
 - [boto3 — Credentials Resolution Order](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/credentials.html)
-
-### B. Checklist de validação pós-instalação
-
-- [ ] `podman ps` lista todos os containers do Hub em estado `Up`
-- [ ] `grep AWS_ACCESS_KEY /etc/pulp/settings.py` dentro do container retorna vazio
-- [ ] `podman exec automation-hub-api aws sts get-caller-identity` retorna `assumed-role/...`
-- [ ] Upload de uma collection via UI concluído com sucesso
-- [ ] `aws s3 ls s3://BUCKET/artifact/` lista o artefato correspondente
-- [ ] Download da collection via `ansible-galaxy collection install` funciona
